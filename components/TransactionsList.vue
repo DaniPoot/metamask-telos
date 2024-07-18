@@ -16,7 +16,7 @@ defineProps({
   <template v-else>
     <ScrollArea class="h-[200px] w-full px-5">
       <div class="flex flex-col gap-5">
-        <template v-for="transaction in transactions">
+        <template v-for="transaction in transactions" :key="transaction.hash">
           <Transaction :transaction="transaction" :account="account" />
         </template>
       </div>
