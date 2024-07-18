@@ -162,6 +162,8 @@ async function onDisconnect() {
     balance.value = 0
     chainId.value = null
     account.value = null
+    telosToken.value = []
+    transactions.value = []
   } catch (error) {
     console.log('disconnect ERR', error)
   }
