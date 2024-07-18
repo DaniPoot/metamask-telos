@@ -153,6 +153,32 @@ export class Metamask {
   async connect() {
     try {
       await this.sdk.connect()
+
+      await this.sdk.getProvider().request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x29",
+            chainName: "Telos Testnet",
+            nativeCurrency: {
+              name: "Telos",
+              symbol: "TLOS",
+              decimals: 18
+            },
+            rpcUrls: ["https://testnet.telos.net:443/evm"],
+            blockExplorerUrls: ["https://testnet.teloscan.io/"]
+          }
+        ]
+      })
+
+      await this.sdk.getProvider().request({
+        method: "wallet_switchEthereumChain",
+        params: [
+          {
+            chainId: "0x29"
+          }
+        ]
+      })
     } catch (error) {
       console.log(error, 'error connecting')
     }
