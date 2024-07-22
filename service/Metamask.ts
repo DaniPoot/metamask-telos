@@ -1,9 +1,12 @@
-import { MetaMaskSDK } from '@metamask/sdk'
 import Web3 from 'web3'
 
 export class Metamask {
   constructor(metamaskSdk) {
     this.sdk = metamaskSdk
+  }
+
+  get currentProvider(): any {
+    return this.web3.currentProvider
   }
 
   async onInit() {
@@ -70,6 +73,7 @@ export class Metamask {
       })
     } catch (error) {
       console.log(error, 'error adding token')
+      throw error
     }
   }
 
@@ -82,11 +86,13 @@ export class Metamask {
 
       return await this.web3.eth.sendTransaction({
         ...params,
+        value,
         gas,
         gasPrice,
       })
     } catch (error) {
       console.log(error, 'error sending transaction')
+      throw error
     }
   }
 
@@ -104,6 +110,7 @@ export class Metamask {
       })
     } catch (error) {
       console.log(error, 'error on transfer token')
+      throw error
     }
   }
 
@@ -125,7 +132,6 @@ export class Metamask {
   }
 
   async getPastEvents({ contractAddress = '', abi = [], fromBlock = 0, toBlock = 'latest' }) {
-    console.log(await this.web3.eth.getTransactionCount('0xB3E5fa23C53CB368CD225142331E3dF8A4661884'))
     const contract = new this.web3.eth.Contract(abi, contractAddress)
     const logs = await contract.getPastEvents('allEvents', {
       fromBlock,
