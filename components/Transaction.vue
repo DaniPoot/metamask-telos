@@ -7,8 +7,6 @@ const props = defineProps({
   account: String
 })
 
-console.log(props.transaction)
-
 const ZERO_ADDRESSES = '0x0000000000000000000000000000000000000000'
 
 const methodSignature = computed(() => {
