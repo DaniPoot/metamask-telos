@@ -35,11 +35,17 @@ export const useAccount = () => {
 
       const missingTokens = tokens.value.filter((token) => !balances.value.find((balance) => balance.token.contract === token.contract))
       const missingBalances = await Promise.all(missingTokens.map(async (token) => {
-        const tokenBalance = await metamask.getBalanceToken({ contractAddress: token.contract, account: account.value, abi: ABI })
-        console.log(tokenBalance)
+        const [amount, tokenInfo] = await Promise.all([
+          metamask.getBalanceToken({ contractAddress: token.contract, account: account.value, abi: ABI }),
+          metamask.getTokenInformation({ contractAddress: token.contract, abi: ABI })
+        ])
         return {
-          amount: 0,
-          token,
+          amount,
+          token: {
+            contract: token.contract,
+            symbol: tokenInfo.symbol,
+            decimals: tokenInfo.decimals,
+          },
           isFetching: true
         }
       }))
