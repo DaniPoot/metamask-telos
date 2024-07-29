@@ -35,8 +35,6 @@ defineExpose({ clearForm })
   <div class="text-sm font-medium">Add Token</div>
   <div class="grid grid-cols-[1fr_auto] gap-2">
     <Input type="text" placeholder="Token Address" v-model="formData.address" />
-    <Input type="text" placeholder="Symbol" v-model="formData.symbol" />
-    <Input type="number" placeholder="Decimals" v-model="formData.decimals" />
   </div>
   <Button variant="outline" type="submit">Add</Button>
 </form>
