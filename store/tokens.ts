@@ -3,17 +3,15 @@ import { ref, readonly } from 'vue'
 
 type Token = {
   contract: string
-  symbol: string
-  decimals: number
   isFetching?: boolean
 }
 
 export const useTokensStore = defineStore('tokens', () => {
   const tokens = ref<Token[]>([])
 
-  function addToken(accountAddress: string, { contract, symbol, decimals, isFetching }: Token) {
+  function addToken(accountAddress: string, { contract, isFetching }: Token) {
     if (tokens.value.find((token) => token.contract === contract)) return
-    tokens.value.push({ contract, symbol, decimals, isFetching })
+    tokens.value.push({ contract, isFetching })
     localStorage.setItem(`tokens-${accountAddress}`, JSON.stringify(tokens.value))
   }
 
