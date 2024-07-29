@@ -164,8 +164,8 @@ async function sendTransaction({ to, amount }) {
 
 async function addToken({ address, symbol, decimals }) {
   try {
-    const response = await metamask.addToken({ address, symbol, decimals })
-    tokensStore.addToken(account.value, { contract: address, symbol, decimals })
+    const response = await metamask.addToken({ address, abi: ABI })
+    tokensStore.addToken(account.value, { contract: address })
     toast({ title: 'Success', description: 'Token added successfully' })
     updateInformation()
   } catch (e) {

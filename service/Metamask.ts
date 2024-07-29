@@ -51,23 +51,22 @@ export class Metamask {
   async addToken({
     type = 'ERC20',
     address,
-    symbol,
-    decimals
+    abi = []
   }: {
     type: string
     address: string
-    symbol: string
-    decimals: number
+    abi: []
   }) {
     try {
+      const token = await this.getTokenInformation({ contractAddress: address, abi })
       return await this.web3.currentProvider.request({
         method: 'wallet_watchAsset',
         params: {
           type: 'ERC20',
           options: {
             address,
-            symbol,
-            decimals
+            symbol: token.symbol,
+            decimals: token.decimals
           }
         }
       })
