@@ -148,6 +148,21 @@ export class Metamask {
     return parseInt(balance) / Math.pow(10, 18)
   }
 
+  async getTokenInformation({ contractAddress = '', abi = [] }) {
+    const contract = new this.web3.eth.Contract(abi, contractAddress)
+    const [decimals, name, symbol] = await Promise.all([
+      contract.methods.decimals().call(),
+      contract.methods.name().call(),
+      contract.methods.symbol().call()
+    ])
+
+    return {
+      decimals: parseInt(decimals),
+      name,
+      symbol
+    }
+  }
+
   async disconnect() {
     try {
       await this.sdk.disconnect()
